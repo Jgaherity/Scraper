@@ -32,26 +32,26 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.connect(MONGODB_URI);
 
 // Routes
-
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
-  // First, we grab the body of the html with axios
-  axios.get("http://www.echojs.com/").then(function(response) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
+  axios.get("https://www.quora.com/topic/History").then(function(response) {
+    //http://www.echojs.com/
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
-      // Save an empty result object
+    $("FeedStory .ui_story_title").each(function(i, element) {
+      //article h2
       var result = {};
 
-      // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
-        .children("a")
+        .children("span")
         .text();
       result.link = $(this)
-        .children("a")
+        .children("span")
         .attr("href");
+
+        console.log(result.title);
+        //console.log(result.title);
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
