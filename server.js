@@ -27,42 +27,53 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-mongoose.connect(MONGODB_URI);
+mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populater";
+// mongoose.connect(MONGODB_URI);
 
 // Routes
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
-  axios.get("https://www.quora.com/topic/History").then(function(response) {
+  axios.get("https://lifehacker.com/").then(function(response) {
     //http://www.echojs.com/
+    //https://www.quora.com/topic/History
+    //https://www.reddit.com/r/SeaWA/
+    //https://medium.com/s/love-hate
     var $ = cheerio.load(response.data);
-
+    console.log("before $");
     // Now, we grab every h2 within an article tag, and do the following:
-    $("FeedStory .ui_story_title").each(function(i, element) {
+    $("article header h1.headline a").each(function(i, element) {
       //article h2
+      //FeedStory .ui_story_title
+      //scrollerItem h2
+      //section a
       var result = {};
 
       result.title = $(this)
-        .children("span")
+        //.children("a")
         .text();
+
       result.link = $(this)
-        .children("span")
         .attr("href");
 
+        console.log(result.link);
         console.log(result.title);
-        //console.log(result.title);
+        console.log("--------------------------------\n");
+        
 
+      //THIS ERRORS OUT//
       // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
-        .then(function(dbArticle) {
-          // View the added result in the console
-          console.log(dbArticle);
-        })
-        .catch(function(err) {
-          // If an error occurred, log it
-          console.log(err);
-        });
+
+      // db.Article.create(result)
+      // .then(function(dbArticle) {
+      //   // View the added result in the console
+      //   console.log(dbArticle);
+      // })
+      // .catch(function(err) {
+      //   // If an error occurred, log it
+      //   console.log(err);
+      // });
+
     });
 
     // Send a message to the client
