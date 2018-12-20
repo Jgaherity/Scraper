@@ -12,6 +12,47 @@
             height:50px;
             /* border:1px solid red; */
             width:100%;
+            display:none;
+        }
+
+        h1{
+            color: #0078d4;
+            font-weight:bold !important;
+            display:inline;
+        }
+        
+        .lead{
+            font-size:35px;
+            font-style: italic;
+            font-weight:lighter;
+            display:inline;
+            margin-left:10px;
+            margin-bottom:5px;
+
+        }
+
+        #articles{
+            margin-top:20px;
+        }
+
+        #articles > div{
+            margin:10px 0;
+        }
+
+        .title{
+            font-size: 25px;
+            background-color: #0078d4;
+            width:100%;
+            color: white;
+            padding-left: 10px;
+            font-weight:lighter;
+            cursor: pointer;
+        }
+
+        .link{
+            font-size:12px !important;
+            color: #0078d4 !important;
+
         }
     </style>
 </head>
@@ -37,8 +78,11 @@
         <div class="container">
           <h1 class="display-4">Mongo Scraper</h1>
           <p class="lead">Quora (history) edition</p>
+          <div id="articles"></div>
         </div>
       </div>
     
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="app.js"></script>
 </html>
